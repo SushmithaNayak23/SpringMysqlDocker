@@ -1,20 +1,22 @@
+// multistage
 pipeline {
     agent any
 
-    stages {
-        stage('Source') {
-            steps {
-                git 'https://github.com/SushmithaNayak23/SpringMysqlDocker.git'
+        stages {
+            stage('Source') {
+                steps {
+                    git url: 'https://github.com/SushmithaNayak23/sample-java-maven.git'
+                }
             }
-        }
-        
-        stage('Build'){
-            steps{
-                echo 'mvn clean package'
+            stage('Build') {
+                steps {
+                    script {
+                        def mvnHome = tool 'LocalMaven'
+                        bat "${mvnHome}\\bin\\mvn -B verify"
+                    }
+                }
             }
-        }
-        
-        stage('SonarQube Analysis') {
+            stage('SonarQube Analysis') {
                 steps {
                     script {
                         def mvnHome = tool 'LocalMaven'
@@ -25,6 +27,11 @@ pipeline {
                 }
             }
             
+            stage('Test') {
+                steps {
+                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+                }
+            }
             stage('Packaging') {
                 steps {
                     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
@@ -48,6 +55,5 @@ pipeline {
                     }
                 }
         }
-    }
+        }
 }
-
