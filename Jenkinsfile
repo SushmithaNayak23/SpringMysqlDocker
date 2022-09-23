@@ -5,7 +5,7 @@ pipeline {
         stages {
             stage('Source') {
                 steps {
-                    git url: 'https://github.com/SushmithaNayak23/sample-java-maven.git'
+                    git url: 'https://github.com/SushmithaNayak23/SpringMysqlDocker.git'
                 }
             }
             stage('Build') {
@@ -27,11 +27,7 @@ pipeline {
                 }
             }
             
-            stage('Test') {
-                steps {
-                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-                }
-            }
+            
             stage('Packaging') {
                 steps {
                     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
