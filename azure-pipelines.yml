@@ -22,7 +22,7 @@ variables:
 
   steps:
   - task: Maven@4
-    displayName: Build Docker image
+    
     inputs:
       mavenPomFile: 'pom.xml'
       publishJUnitResults: true
