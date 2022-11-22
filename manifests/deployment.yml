@@ -1,19 +1,19 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: samplewebapp 
+  name: SpringAKS 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: samplewebapp
+      app: SpringAKS
   template:
     metadata:
       labels:
-        app: samplewebapp 
+        app: SpringAKS 
     spec:
       containers:
-        - name: samplewebapp 
-          image: devopsmelacr.azurecr.io/samplewebapp
+        - name: SpringAKS 
+          image: devopsmelacr.azurecr.io/SpringAKS
           ports:
           - containerPort: 80
