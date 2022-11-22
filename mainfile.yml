@@ -1,0 +1,30 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: SpringAKS 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: SpringAKS
+  template:
+    metadata:
+      labels:
+        app: SpringAKS 
+    spec:
+      containers:
+        - name: SpringAKS 
+          image: devopsmelacr.azurecr.io/SpringAKS
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: SpringAKS
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 80 
+    selector:
+        app: SpringAKS
